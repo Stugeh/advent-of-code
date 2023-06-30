@@ -29,32 +29,55 @@ enum Choice {
     None = 0,
 }
 
+enum Goal {
+    Win,
+    Draw,
+    Lose,
+}
+
 pub struct Game {
     opponent: Choice,
     player: Choice,
 }
 
 impl Game {
-    fn char_to_choice(ch: char) -> Choice {
-        match ch {
-            'A' | 'X' => Choice::Rock,
-            'B' | 'Y' => Choice::Paper,
-            'C' | 'Z' => Choice::Scissors,
-            _ => Choice::None,
-        }
-    }
-
     pub fn parse_game(string: &str) -> Game {
-        let opponent_char = string.chars().next().unwrap();
-        let player_char = string.chars().nth(2).unwrap();
+        let opponent_choice = match string.chars().next().unwrap() {
+            'A' => Choice::Rock,
+            'B' => Choice::Paper,
+            'C' => Choice::Scissors,
+            _ => Choice::None,
+        };
 
+        let player_goal = match string.chars().last().unwrap() {
+            'Z' => Goal::Win,
+            'Y' => Goal::Draw,
+            'X' => Goal::Lose,
+            _ => Goal::Draw,
+        };
+
+        let player_choice = match player_goal {
+            Goal::Draw => opponent_choice.clone(),
+            Goal::Win => match opponent_choice {
+                Choice::Rock => Choice::Paper,
+                Choice::Paper => Choice::Scissors,
+                Choice::Scissors => Choice::Rock,
+                _ => Choice::None,
+            },
+            Goal::Lose => match opponent_choice {
+                Choice::Rock => Choice::Scissors,
+                Choice::Paper => Choice::Rock,
+                Choice::Scissors => Choice::Paper,
+                _ => Choice::None,
+            },
+        };
         Game {
-            opponent: Game::char_to_choice(opponent_char),
-            player: Game::char_to_choice(player_char),
+            opponent: opponent_choice,
+            player: player_choice,
         }
     }
 
-    pub fn score_match(&self) -> i32 {
+    pub fn count_score(&self) -> i32 {
         let mut total: i32 = self.player.clone() as i32;
 
         total += match self.player {
@@ -84,7 +107,7 @@ pub fn get_score(input: Vec<String>) {
     let total_score: i32 = input
         .iter()
         .map(|item| Game::parse_game(item))
-        .map(|game| game.score_match())
+        .map(|game| game.count_score())
         .sum();
 
     println!("{}", total_score)
