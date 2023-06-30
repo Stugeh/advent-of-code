@@ -8,26 +8,26 @@
 
 use std::{error::Error, fs};
 
-pub fn count_calories() -> Result<u32, Box<dyn Error>> {
-    let mut max = 0;
+pub fn count_calories() -> Result<i32, Box<dyn Error>> {
+    let mut calory_counts: Vec<i32> = Vec::new();
 
     let lines: Vec<String> = fs::read_to_string("../input-files/day01-input")?
         .lines()
         .map(String::from)
         .collect();
 
-    let mut total: u32 = 0;
+    let mut total: i32 = 0;
 
     for line in lines {
         if line.is_empty() {
-            if total > max {
-                max = total
-            }
+            calory_counts.push(total);
             total = 0;
         } else {
-            total += line.parse::<u32>().unwrap();
+            total += line.parse::<i32>().unwrap();
         }
     }
 
-    Ok(max)
+    calory_counts.sort_by(|a, b| b.cmp(a));
+    calory_counts.truncate(3);
+    Ok(calory_counts.iter().sum())
 }
