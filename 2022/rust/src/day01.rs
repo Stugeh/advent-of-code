@@ -6,19 +6,12 @@
 // a Blank line denotes the end of an inventory.
 // Get the elf with the most Calories
 
-use std::{error::Error, fs};
-
-pub fn count_calories() -> Result<i32, Box<dyn Error>> {
+pub fn count_calories(input: Vec<String>) {
     let mut calory_counts: Vec<i32> = Vec::new();
-
-    let lines: Vec<String> = fs::read_to_string("../input-files/day01-input")?
-        .lines()
-        .map(String::from)
-        .collect();
 
     let mut total: i32 = 0;
 
-    for line in lines {
+    for line in input {
         if line.is_empty() {
             calory_counts.push(total);
             total = 0;
@@ -29,5 +22,7 @@ pub fn count_calories() -> Result<i32, Box<dyn Error>> {
 
     calory_counts.sort_by(|a, b| b.cmp(a));
     calory_counts.truncate(3);
-    Ok(calory_counts.iter().sum())
+    let sum: i32 = calory_counts.iter().sum();
+
+    println!("{}", sum);
 }
