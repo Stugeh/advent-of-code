@@ -61,8 +61,6 @@ pub fn organize_rucksacks(input: Vec<String>) {
     for line in &input {
         let (half1, half2) = get_str_halfs(line.clone());
         let incorrect_char = get_char_anomaly(half1, half2);
-
-        // let incorrect_char = get_char_anomaly(half1, half2);
         total1 += get_char_priority(incorrect_char);
     }
 
@@ -73,8 +71,8 @@ pub fn organize_rucksacks(input: Vec<String>) {
         total2 += get_char_priority(badge);
     }
 
-    println!("part 1 : {}", total1);
-    println!("part 2 priorities: {}", total2);
+    println!("part 1: {}", total1);
+    println!("part 2: {}", total2);
 }
 
 #[cfg(test)]
