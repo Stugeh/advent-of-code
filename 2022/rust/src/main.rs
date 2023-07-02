@@ -3,6 +3,7 @@ use std::{env, fs};
 pub mod day01;
 pub mod day02;
 pub mod day03;
+pub mod day04;
 
 fn get_input_lines(day: &String) -> Vec<String> {
     let input_lines = fs::read_to_string(format!("../input-files/day{}-input", *day));
@@ -24,6 +25,7 @@ fn main() {
         "01" => day01::count_calories(input),
         "02" => day02::get_score(input),
         "03" => day03::organize_rucksacks(input),
+        "04" => day04::get_consumed_ranges_count(input),
         &_ => {}
     };
 }
