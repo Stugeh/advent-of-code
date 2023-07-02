@@ -6,7 +6,8 @@
 // ...
 // 2-3,4-5
 //
-// Find how many times one of the ranges in a pair  fully contains the other.
+// Part 1: Find how many times one of the ranges in a pair  fully contains the other.
+// Part 2: Find how many times the ranges overlap at all
 
 pub fn get_consumed_ranges_count(input: Vec<String>) {
     let mut consumed_ranges = 0;
