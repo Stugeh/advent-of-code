@@ -43,15 +43,32 @@ fn get_char_priority(ch: char) -> i32 {
     }
 }
 
+fn analyze_sacks_for_duplicates(group: &[String]) -> char {
+    let sack1 = group.first().unwrap_or_else(|| panic!("AAAAAA!"));
+    for chr in sack1.chars() {
+        if group[1].contains(chr) && group[2].contains(chr) {
+            return chr;
+        }
+    }
+    panic!("No duplicates found")
+}
+
 pub fn organize_rucksacks(input: Vec<String>) {
     let mut total = 0;
 
-    for line in input {
-        let (half1, half2) = get_str_halfs(line);
-
-        let incorrect_char = get_char_anomaly(half1, half2);
-        total += get_char_priority(incorrect_char);
+    let groups = input.chunks(3);
+    for group in groups {
+        let badge = analyze_sacks_for_duplicates(group);
+        total += get_char_priority(badge);
     }
+
+    // PART 1:
+    // for line in input {
+    //     let (half1, half2) = get_str_halfs(line);
+
+    //     // let incorrect_char = get_char_anomaly(half1, half2);
+    //     total += get_char_priority(incorrect_char);
+    // }
 
     println!("total priorities: {}", total)
 }
