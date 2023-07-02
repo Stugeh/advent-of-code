@@ -31,9 +31,7 @@ pub fn get_consumed_ranges_count(input: Vec<String>) {
                 .unwrap_or_else(|err| panic!("{}", err)),
         ];
 
-        if range1[0] <= range2[0] && range1[1] >= range2[1]
-            || range1[0] >= range2[0] && range1[1] <= range2[1]
-        {
+        if range1[0] <= range2[1] && range1[1] >= range2[0] {
             consumed_ranges += 1;
         }
     }
