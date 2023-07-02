@@ -58,12 +58,14 @@ impl Game {
 
         let player_choice = match player_goal {
             Goal::Draw => opponent_choice.clone(),
+
             Goal::Win => match opponent_choice {
                 Choice::Rock => Choice::Paper,
                 Choice::Paper => Choice::Scissors,
                 Choice::Scissors => Choice::Rock,
                 _ => Choice::None,
             },
+
             Goal::Lose => match opponent_choice {
                 Choice::Rock => Choice::Scissors,
                 Choice::Paper => Choice::Rock,

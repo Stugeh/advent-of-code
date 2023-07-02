@@ -11,6 +11,7 @@ pub fn count_calories(input: Vec<String>) {
 
     let mut total: i32 = 0;
 
+    // TODO make less dumb
     for line in input {
         if line.is_empty() {
             calory_counts.push(total);
