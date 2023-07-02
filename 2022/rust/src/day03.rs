@@ -54,23 +54,27 @@ fn analyze_sacks_for_duplicates(group: &[String]) -> char {
 }
 
 pub fn organize_rucksacks(input: Vec<String>) {
-    let mut total = 0;
+    let mut total1 = 0;
+    let mut total2 = 0;
 
+    //PART 1:
+    for line in &input {
+        let (half1, half2) = get_str_halfs(line.clone());
+        let incorrect_char = get_char_anomaly(half1, half2);
+
+        // let incorrect_char = get_char_anomaly(half1, half2);
+        total1 += get_char_priority(incorrect_char);
+    }
+
+    // PART 2:
     let groups = input.chunks(3);
     for group in groups {
         let badge = analyze_sacks_for_duplicates(group);
-        total += get_char_priority(badge);
+        total2 += get_char_priority(badge);
     }
 
-    // PART 1:
-    // for line in input {
-    //     let (half1, half2) = get_str_halfs(line);
-
-    //     // let incorrect_char = get_char_anomaly(half1, half2);
-    //     total += get_char_priority(incorrect_char);
-    // }
-
-    println!("total priorities: {}", total)
+    println!("part 1 : {}", total1);
+    println!("part 2 priorities: {}", total2);
 }
 
 #[cfg(test)]
