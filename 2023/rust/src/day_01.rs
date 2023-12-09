@@ -44,14 +44,7 @@ pub fn solution(input: Vec<String>) {
             idx_offset += 1;
         }
 
-        if last_num == '_' {
-            last_num = first_num;
-        } else if first_num == '_' {
-            first_num = last_num;
-        }
-
         let result = format!("{}{}", first_num, last_num);
-        println!("{}", result);
 
         total += result.parse::<i32>().unwrap_or(0);
     }
