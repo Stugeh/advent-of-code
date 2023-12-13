@@ -17,4 +17,53 @@
 //
 // What is the sum of the IDs of games possible with 12 red cubes, 13 green cubes, and 14 blue cubes?
 
-pub fn solution(mut input: Vec<String>) {}
+fn fuck(val: &mut u16, nums: &mut String) {
+    let new_num = nums.parse::<u16>().unwrap();
+    if new_num > *val {
+        *val = new_num
+    }
+    *nums = String::from("0");
+}
+
+pub fn solution(input: Vec<String>) {
+    let red_max = 12;
+    let green_max = 13;
+    let blue_max = 14;
+    let mut possible_games: Vec<u16> = vec![];
+
+    for line in input.iter() {
+        let mut red = 0;
+        let mut green = 0;
+        let mut blue = 0;
+        let mut id = 0;
+
+        let mut nums = String::from("0");
+        let line = line;
+
+        for ch in line.chars() {
+            match ch.is_numeric() {
+                true => nums.push(ch),
+                false => match ch {
+                    'r' => fuck(&mut red, &mut nums),
+                    'g' => fuck(&mut green, &mut nums),
+                    'b' => fuck(&mut blue, &mut nums),
+                    ':' => {
+                        id = nums.parse::<u16>().unwrap();
+                        nums = String::from("0");
+                    }
+                    _ => {}
+                },
+            }
+        }
+
+        if red > red_max || green > green_max || blue > blue_max {
+            continue;
+        }
+
+        possible_games.push(id);
+    }
+
+    let total = possible_games.iter().sum::<u16>();
+    println!("{total}");
+}
+
