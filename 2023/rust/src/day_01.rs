@@ -17,8 +17,31 @@
 // It looks like some of the digits are actually spelled out with letters: one, two, three, four, five, six, seven, eight,
 // and nine also count as valid "digits".
 
-pub fn solution(input: Vec<String>) {
+fn replace_spelled_digits(input: &mut Vec<String>) {
+    // not a word
+    let digits = [
+        ("one", "o1ne"),
+        ("two", "t2wo"),
+        ("three", "t3hree"),
+        ("four", "f4our"),
+        ("five", "f5ive"),
+        ("six", "s6ix"),
+        ("seven", "s7even"),
+        ("eight", "e8ight"),
+        ("nine", "n9ine"),
+    ];
+
+    for line in input.iter_mut() {
+        for digit in digits.iter() {
+            *line = line.replace(digit.0, digit.1);
+        }
+    }
+}
+
+pub fn solution(mut input: Vec<String>) {
     let mut total: i32 = 0;
+    // Not optimal but I'm lazy.
+    replace_spelled_digits(&mut input);
 
     for input_line in &input {
         let line_bytes = input_line.as_bytes();
