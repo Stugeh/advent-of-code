@@ -16,9 +16,12 @@
 // Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green
 //
 // What is the sum of the IDs of games possible with 12 red cubes, 13 green cubes, and 14 blue cubes?
+//
+// Part 2:
+// What is the sum of the product of the minimum number of cubes needed in a game
 
-fn fuck(val: &mut u16, nums: &mut String) {
-    let new_num = nums.parse::<u16>().unwrap();
+fn override_if_larger(val: &mut u64, nums: &mut String) {
+    let new_num = nums.parse::<u64>().unwrap();
     if new_num > *val {
         *val = new_num
     }
@@ -26,16 +29,16 @@ fn fuck(val: &mut u16, nums: &mut String) {
 }
 
 pub fn solution(input: Vec<String>) {
-    let red_max = 12;
-    let green_max = 13;
-    let blue_max = 14;
-    let mut possible_games: Vec<u16> = vec![];
+    // let red_max = 12;
+    // let green_max = 13;
+    // let blue_max = 14;
+    let mut possible_games: Vec<u64> = vec![];
 
     for line in input.iter() {
         let mut red = 0;
         let mut green = 0;
         let mut blue = 0;
-        let mut id = 0;
+        // let mut id = 0;
 
         let mut nums = String::from("0");
         let line = line;
@@ -44,11 +47,11 @@ pub fn solution(input: Vec<String>) {
             match ch.is_numeric() {
                 true => nums.push(ch),
                 false => match ch {
-                    'r' => fuck(&mut red, &mut nums),
-                    'g' => fuck(&mut green, &mut nums),
-                    'b' => fuck(&mut blue, &mut nums),
+                    'r' => override_if_larger(&mut red, &mut nums),
+                    'g' => override_if_larger(&mut green, &mut nums),
+                    'b' => override_if_larger(&mut blue, &mut nums),
                     ':' => {
-                        id = nums.parse::<u16>().unwrap();
+                        // id = nums.parse::<u64>().unwrap();
                         nums = String::from("0");
                     }
                     _ => {}
@@ -56,14 +59,14 @@ pub fn solution(input: Vec<String>) {
             }
         }
 
-        if red > red_max || green > green_max || blue > blue_max {
-            continue;
-        }
+        // if red > red_max || green > green_max || blue > blue_max {
+        //     continue;
+        // }
 
-        possible_games.push(id);
+        possible_games.push(red * green * blue);
     }
 
-    let total = possible_games.iter().sum::<u16>();
+    let total = possible_games.iter().sum::<u64>();
     println!("{total}");
 }
 
