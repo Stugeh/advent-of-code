@@ -1,1 +1,1 @@
-pub fn solution(input: Vec<String>) {}
+pub fn solution(_input: Vec<String>) {}

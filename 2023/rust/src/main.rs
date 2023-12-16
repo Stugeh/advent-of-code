@@ -16,6 +16,6 @@ fn get_input_lines(day: &str) -> Vec<String> {
 }
 
 fn main() {
-    let input = get_input_lines("02");
+    let input = get_input_lines("03");
     day_03::solution(input)
 }
